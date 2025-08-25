@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x2705; Pipeline&colon; From Raw WAVs to Final Comparison Plots</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h2 id="-pipeline-from-raw-wavs-to-final-comparison-plots">✅ Pipeline: From Raw WAVs to Final Comparison Plots</h2>
+<h3 id="-core-utility-module-used-by-batch-scripts">🔧 <strong>CORE UTILITY MODULE (used by batch scripts)</strong></h3>
+<p><strong>1.</strong> <code>src/detection/click_detection_utils.py</code></p>
+<ul>
+<li>
+<p><strong>Functions</strong>:</p>
+<ul>
+<li><code>detect_clicks(file_path, config)</code></li>
+<li><code>save_detection_results(df, output_path, wav_path)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Purpose</strong>: Implements the core DSP-based click detection logic and CSV saving.</p>
+</li>
+<li>
+<p>💡 This module is <strong>imported</strong> by <code>click_detection_batch.py</code> and <strong>should not be run directly</strong>.</p>
+</li>
+</ul>
+<hr>
+<h3 id="️-execution-scripts-run-these-in-sequence">🏃‍♂️ <strong>EXECUTION SCRIPTS (Run these in sequence)</strong></h3>
+<p><strong>2.</strong> <code>src/detection/click_detection_batch.py</code></p>
+<ul>
+<li>Detects click events for all <code>.wav</code> files under <code>data/raw/</code></li>
+<li>Saves output as: <code>data/metadata/model_detections/**/{filename}_events.csv</code></li>
+</ul>
+<pre><code class="language-bash">python src/detection/click_detection_batch.py
+</code></pre>
+<hr>
+<p><strong>3.</strong> <code>src/aggregation/aggregate_detections_batch.py</code></p>
+<ul>
+<li>Aggregates click events using sliding time windows (e.g., 60s).</li>
+<li>Input: <code>*_events.csv</code></li>
+<li>Output: <code>*_aggregated.csv</code></li>
+</ul>
+<pre><code class="language-bash">python src/aggregation/aggregate_detections_batch.py model_detections
+python src/aggregation/aggregate_detections_batch.py reference_detections
+</code></pre>
+<hr>
+<p><strong>4.</strong> <code>src/aggregation/joint_aggregate_detections.py</code></p>
+<ul>
+<li>Concatenates all <code>*_aggregated.csv</code> files in a folder, preserving time continuity.</li>
+<li>Output: <code>*_joint.csv</code> for each trial folder.</li>
+</ul>
+<pre><code class="language-bash">python src/aggregation/joint_aggregate_detections.py model_detections
+python src/aggregation/joint_aggregate_detections.py reference_detections
+</code></pre>
+<hr>
+<p><strong>5.</strong> <code>src/visualization/plot_detection_comparison.py</code></p>
+<ul>
+<li>Plots side-by-side comparison between model and reference detections.</li>
+<li>Input: <code>*_joint.csv</code> from both folders.</li>
+<li>Output: <code>data/figures/comparison/{trial_name}_comparison.png</code></li>
+</ul>
+<pre><code class="language-bash">python src/visualization/plot_detection_comparison.py
+</code></pre>
+<hr>
+<h3 id="-optional">🧪 Optional</h3>
+<p><strong>notebooks/exploratory/detection_analysis.ipynb</strong></p>
+<ul>
+<li>Interactive exploration of detection, parameter tuning, and feature visualization.</li>
+</ul>
+<hr>
+<h2 id="-summary-of-core-and-scripts">🧭 Summary of Core and Scripts</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Script/Module</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔧 Core Utility</td>
+<td><code>click_detection_utils.py</code></td>
+<td>Implements detection + CSV saving</td>
+</tr>
+<tr>
+<td>▶️ Script</td>
+<td><code>click_detection_batch.py</code></td>
+<td>Run detection for all <code>.wav</code> files</td>
+</tr>
+<tr>
+<td>▶️ Script</td>
+<td><code>aggregate_detections_batch.py</code></td>
+<td>Aggregate detection events</td>
+</tr>
+<tr>
+<td>▶️ Script</td>
+<td><code>joint_aggregate_detections.py</code></td>
+<td>Combine aggregated results across files</td>
+</tr>
+<tr>
+<td>▶️ Script</td>
+<td><code>plot_detection_comparison.py</code></td>
+<td>Generate comparison plots</td>
+</tr>
+<tr>
+<td>📓 Notebook</td>
+<td><code>detection_analysis.ipynb</code></td>
+<td>Interactive analysis of detection logic</td>
+</tr>
+</tbody>
+</table>
+
+            
+            
+        </body>
+        </html>

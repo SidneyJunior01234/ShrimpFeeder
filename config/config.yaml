@@ -1,0 +1,26 @@
+audio:
+  # Default sample rate (Hz) used in common audio applications (e.g., music, speech).
+  # Note: Shrimp detection typically uses higher sample rates (e.g., 96–192 kHz),
+  # so this value may be overridden based on each WAV file's metadata.
+  default_fs: 44100
+
+processing:
+  # Duration (in seconds) of each short-term analysis frame (used in STFT resolution)
+  short_term_duration: 0.005
+
+  # Duration (in seconds) of each mid-term window for sequential reading of audio data
+  # This helps minimize reading gaps between consecutive audio chunks
+  mid_term_duration: 1.0
+
+detection:
+  # Amplitude threshold for detecting click events (empirically selected)
+  threshold: 0.01
+
+  frequency_band:
+    # Frequency range (in Hz) used by SF and HFC onset detection functions
+    low: 5000
+    high: 22000
+
+aggregation:
+  # Window size (in seconds) used to aggregate detected clicks (e.g., count per window)
+  window_size: 60
