@@ -5,6 +5,16 @@ import yaml
 from pathlib import Path
 import base64
 
+# Defina a pasta base dentro do container (onde você vai montar os dados do host)
+BASE_DIR = Path("/app/data")  
+
+# Se já tiver algo selecionado, garanta que ele está dentro de BASE_DIR
+if "diretorio_final_selecionado" in st.session_state:
+    caminho_usuario = Path(st.session_state["diretorio_final_selecionado"])
+    if not caminho_usuario.is_absolute():
+        # Corrige para ficar dentro do BASE_DIR
+        st.session_state["diretorio_final_selecionado"] = str(BASE_DIR / caminho_usuario)
+
 logo_path = Path("pages/images/logo.jpg")
 
 if logo_path.exists():
