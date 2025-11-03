@@ -44,7 +44,7 @@ def converter_sintaxe_para_wsl_linux(caminho_digitado: str) -> str:
         # Substitui barras invertidas por barras normais e remove barra inicial extra se houver
         rest = match.group(2).replace("\\", "/").lstrip("/")
         caminho_convertido_str = f"/mnt/{drive}/{rest}"
-        st.info(f"💡 Caminho Windows detectado e convertido para formato WSL/Linux: `{caminho_convertido_str}`")
+        st.info(f"💡 Windows path detected and converted to WSL/Linux format: `{caminho_convertido_str}`")
         return caminho_convertido_str
     
     # 2. Retorna o caminho como está se já for um formato Linux/WSL
@@ -64,9 +64,9 @@ def selecionar_diretorio_atual():
             st.session_state.diretorio_final_selecionado = str(caminho)
             st.session_state.redirecionar_para_app = True
         else:
-            st.error(f"⚠️ O diretório selecionado não existe ou não é uma pasta válida: `{st.session_state.pasta_atual}`")
+            st.error(f"⚠️ The selected directory does not exist or is not a valid folder: `{st.session_state.pasta_atual}`")
     except Exception as e:
-        st.error(f"⚠️ Erro ao validar o caminho: {e}. Verifique se o caminho está correto e acessível.")
+        st.error(f"⚠️ Error validating path: {e}. Please check if the path is correct and accessible.")
 
 
 def aplicar_caminho_manual():
@@ -85,10 +85,10 @@ def aplicar_caminho_manual():
             # Apenas atualiza o estado pendente, o re-run fará a atualização final
             st.session_state.nova_pasta_pendente = str(caminho_convertido)
         else:
-            st.error(f"O caminho digitado não é um diretório válido ou acessível: '{caminho_digitado}'")
+            st.error(f"The entered path is not a valid or accessible directory: '{caminho_digitado}'")
     except Exception as e:
         # Captura erros de FileNotFoundError ou PermissionError
-        st.error(f"Erro ao acessar o diretório: {e}. Verifique se o caminho está correto e acessível.")
+        st.error(f"Error accessing directory: {e}. Please check if the path is correct and accessible.")
 
 # -------------------------------
 # Layout Streamlit
@@ -98,12 +98,12 @@ if st.session_state.nova_pasta_pendente != st.session_state.pasta_atual:
     st.session_state.pasta_atual = st.session_state.nova_pasta_pendente
     st.rerun()
 
-st.title("Seletor de Diretórios WSL")
-st.markdown(f"Selecione o diretório de trabalho. Você pode usar caminhos do Windows (`C:\...`) ou caminhos do WSL (`/mnt/c/...`).")
+st.title("Directory Selector")
+st.markdown(f"Select the working directory. You can use Windows paths (C:\...) or WSL paths (/mnt/c/...).")
 
 # Campo de input
 st.text_input(
-    "Digite o caminho do diretório:",
+    "Enter the directory path:",
     key='input_caminho_manual',
     on_change=aplicar_caminho_manual,
     help="Ex: D:\\data\\raw\\Freq_Feeding (Windows) ou /mnt/d/data/raw/Freq_Feeding (Linux/WSL)",
@@ -111,15 +111,15 @@ st.text_input(
 )
 
 # Botão de seleção final
-st.button('✅ Selecionar Este Diretório', on_click=selecionar_diretorio_atual)
+st.button('✅ Select This Directory', on_click=selecionar_diretorio_atual)
 
 # Exibe o caminho atualmente definido
-st.markdown(f"**Caminho Atual:** `{st.session_state.pasta_atual}`")
+st.markdown(f"**Current Path:** `{st.session_state.pasta_atual}`")
 
 
 # Redirecionamento (simulação)
 if st.session_state.get('redirecionar_para_app'):
-    st.success(f"Diretório selecionado com sucesso: `{st.session_state.diretorio_final_selecionado}`")
+    st.success(f"Directory selected successfully: `{st.session_state.diretorio_final_selecionado}`")
     st.switch_page('app.py')
     # Apenas limpa o estado para permitir nova seleção
     st.session_state.redirecionar_para_app = False

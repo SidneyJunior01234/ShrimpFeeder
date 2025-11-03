@@ -110,12 +110,9 @@ raw
 caminho_selecionado = st.session_state.get('diretorio_final_selecionado')
 
 if caminho_selecionado:
-    st.success(f"O diretório foi selecionado com sucesso.")
-    st.markdown(f"O caminho selecionado é: `{caminho_selecionado}`")
-    st.markdown(f"Use a barra lateral para configurar os parâmetros do algoritmo.")
-    
-    # 🚨 PONTO CRÍTICO: Aqui você usaria 'caminho_selecionado' para carregar seus dados
-    # Exemplo: all_files = list(Path(caminho_selecionado).rglob('*.wav'))
+    st.success(f"The directory was selected successfully.")
+    st.markdown(f"The selected path is: `{caminho_selecionado}`")
+    st.markdown(f"Use the sidebar to configure the algorithm parameters.")
     
     st.markdown('### ')
     
@@ -152,7 +149,7 @@ if caminho_selecionado:
     
     # Botão de execução
     if st.button('Execute'):
-        st.info("O pipeline está em execução...")
+        st.info("The pipeline is running...")
 
         # 1. Constrói o dicionário de configurações com base na escolha do usuário
         if use_default_config:
@@ -192,7 +189,7 @@ if caminho_selecionado:
                     }
                 }
             except ValueError:
-                st.error("Erro: Por favor, insira valores numéricos válidos.")
+                st.error("Error: Please enter valid numeric values.")
                 st.stop()
         
         # 2. Salva o arquivo de configuração antes de executar a pipeline
