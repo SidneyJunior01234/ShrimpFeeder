@@ -94,7 +94,7 @@ O Streamlit iniciará um servidor e fornecerá um link (Network URL) que você d
 
 As etapas para um ambiente Linux nativo são muito semelhantes, mas sem a necessidade de instalar o WSL.
 
-## Passo 1: Preparação do Ambiente
+### Passo 1: Preparação do Ambiente
 
 1. **Atualizar o Sistema:** Abra o terminal e atualize os pacotes:
 
