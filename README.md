@@ -50,8 +50,8 @@ cd ~
 2. **Clonar (Git):** Se estiver usando Git, clone o repositório:
 
 ```
-git clone [URL_DO_REPOSITORIO]
-cd [NOME_DO_REPOSITORIO]
+git clone https://github.com/SidneyJunior01234/ShrimpFeeder.git
+cd ShrimpFeeder
 ```
 
 **OU**
