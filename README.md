@@ -117,7 +117,7 @@ git clone https://github.com/SidneyJunior01234/ShrimpFeeder.git
 cd ShrimpFeeder
 ```
 
-## Passo 3: Configuração e Ativação do Ambiente Virtual (Venv)
+### Passo 3: Configuração e Ativação do Ambiente Virtual (Venv)
 
 1. **Criar a Venv:** Crie o ambiente virtual:
 
