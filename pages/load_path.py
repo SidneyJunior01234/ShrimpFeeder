@@ -13,7 +13,7 @@ START_DIR = Path("/mnt/c").resolve()
 # Gerenciamento de Estado da Sessão
 # -------------------------------
 def iniciar_estado_sessao():
-    """Inicializa as variáveis de estado de sessão necessárias."""
+    r"""Inicializa as variáveis de estado de sessão necessárias."""
     if 'pasta_atual' not in st.session_state:
         # Define o diretório inicial como /mnt/c para facilitar o acesso ao Windows
         st.session_state.pasta_atual = str(START_DIR)
@@ -30,7 +30,7 @@ iniciar_estado_sessao()
 # Função de Utilitário Central
 # -------------------------------
 def converter_sintaxe_para_wsl_linux(caminho_digitado: str) -> str:
-    """
+    r"""
     Converte um caminho no formato Windows (ex: C:\dir\file)
     para o formato Linux/WSL (ex: /mnt/c/dir/file).
     Se for um caminho Linux/WSL, retorna como está.
@@ -55,7 +55,7 @@ def converter_sintaxe_para_wsl_linux(caminho_digitado: str) -> str:
 # Callbacks
 # -------------------------------
 def selecionar_diretorio_atual():
-    """Define a pasta atual como a seleção final e redireciona para a página principal."""
+    r"""Define a pasta atual como a seleção final e redireciona para a página principal."""
     caminho = Path(st.session_state.pasta_atual).resolve()
 
     # No WSL, a única validação é garantir que o caminho exista e seja um diretório.
@@ -70,7 +70,7 @@ def selecionar_diretorio_atual():
 
 
 def aplicar_caminho_manual():
-    """Atualiza a pasta atual com base no input de texto manual, aplicando a conversão de sintaxe."""
+    r"""Atualiza a pasta atual com base no input de texto manual, aplicando a conversão de sintaxe."""
     caminho_digitado = st.session_state.input_caminho_manual.strip()
     
     # Converte a sintaxe (Windows -> WSL/Linux)
