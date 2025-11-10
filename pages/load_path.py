@@ -99,7 +99,7 @@ if st.session_state.nova_pasta_pendente != st.session_state.pasta_atual:
     st.rerun()
 
 st.title("Directory Selector")
-st.markdown(f"Select the working directory. You can use Windows paths (C:\...) or WSL paths (/mnt/c/...).")
+st.markdown(r"Select the working directory. You can use Windows paths (C:\...) or WSL paths (/mnt/c/...).")
 
 # Campo de input
 st.text_input(
