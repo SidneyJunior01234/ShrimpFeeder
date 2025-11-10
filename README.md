@@ -50,8 +50,8 @@ cd ~
 2. **Clonar (Git):** Se estiver usando Git, clone o repositório:
 
 ```
-git clone [URL_DO_REPOSITORIO]
-cd [NOME_DO_REPOSITORIO]
+git clone https://github.com/SidneyJunior01234/ShrimpFeeder.git
+cd ShrimpFeeder
 ```
 
 **OU**
@@ -94,7 +94,7 @@ O Streamlit iniciará um servidor e fornecerá um link (Network URL) que você d
 
 As etapas para um ambiente Linux nativo são muito semelhantes, mas sem a necessidade de instalar o WSL.
 
-## Passo 1: Preparação do Ambiente
+### Passo 1: Preparação do Ambiente
 
 1. **Atualizar o Sistema:** Abra o terminal e atualize os pacotes:
 
@@ -117,7 +117,7 @@ git clone https://github.com/SidneyJunior01234/ShrimpFeeder.git
 cd ShrimpFeeder
 ```
 
-## Passo 3: Configuração e Ativação do Ambiente Virtual (Venv)
+### Passo 3: Configuração e Ativação do Ambiente Virtual (Venv)
 
 1. **Criar a Venv:** Crie o ambiente virtual:
 
